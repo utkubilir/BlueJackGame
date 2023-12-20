@@ -1,0 +1,112 @@
+
+
+import java.util.Random;
+
+public class PlayerDeck {
+    Random r = new Random();
+    private Cards[] playerDeck;
+    private Cards[] playerHand;
+	public Cards [] first5cards;
+	private GameDeck gameDeck; 
+	private Cards DOUBLE;
+	private Cards flip;
+	private SignDeck signDeck;
+	public int randomValue;
+	
+
+    public PlayerDeck() {
+        gameDeck = new GameDeck();
+		randomValue = r.nextInt(100);
+        signDeck = new SignDeck();
+        playerDeck = new Cards[10];
+        playerHand = new Cards[4];
+        first5cards = gameDeck.drawFirst5Cards();
+        fillPlayerDeck(first5cards);
+		fillPlayerHand();
+    }
+	public void synchronizeWithGameDeck(GameDeck gameDeck) {
+        first5cards = gameDeck.drawFirst5Cards();
+        fillPlayerDeck(first5cards);
+    }
+	public Cards[] fillPlayerDeck(Cards[] first5cards) {
+
+        for (int i = 0; i < 5; i++) {
+            playerDeck[i] = first5cards[i];
+        }
+
+        for (int i = 5; i < 8; i++) {
+            playerDeck[i] = signDeck.getSignCard();
+        }
+
+        
+
+        if (randomValue > 20) {
+            playerDeck[8] = signDeck.getSignCard();
+            playerDeck[9] = signDeck.getSignCard();
+        } else if (randomValue < 4) {
+            playerDeck[8] = signDeck.getFlip();
+            playerDeck[9] = signDeck.getDouble();
+        } else if (randomValue >= 4 && randomValue <= 20) {
+            playerDeck[8] = signDeck.getFlipOrDouble();
+            playerDeck[9] = signDeck.getSignCard();
+        }
+		return playerDeck;
+    }
+
+	public Cards[] printPlayerDeck() {
+        System.out.print("Player Deck: ");
+        for (int i = 0; i < playerDeck.length; i++) {
+            System.out.print(playerDeck[i].toString() + " ");
+        }
+        System.out.println();
+		return playerDeck;
+    }
+
+	public Cards[] fillPlayerHand(){
+		Cards [] playerDeckCopy = new Cards[10];
+		for(int i = 0 ; i < playerDeckCopy.length ; i++){
+			playerDeckCopy[i] = playerDeck[i];
+			
+		}
+		Random r = new Random();
+		int randomValue = r.nextInt(playerDeckCopy.length) + 1 ;
+       for (int i = playerDeckCopy.length - 1; i > 0; i--) {
+            int j = r.nextInt(i + 1);
+
+            Cards temp = playerDeckCopy[i];
+            playerDeckCopy[i] = playerDeckCopy[j];
+            playerDeckCopy[j] = temp;
+        }
+
+        for (int i = 0; i < playerHand.length; i++) {
+            playerHand[i] = playerDeckCopy[i];
+        }
+	   return playerHand;
+	}
+	
+	 public Cards[] printPlayerHand() {
+		System.out.print("Player Hand:");
+		System.out.print("[");
+        for (int i = 0; i < playerHand.length; i++) {
+            System.out.print(playerHand[i].toString());
+            if (i < playerHand.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+		return playerHand;
+    }
+	
+    
+	public Cards[] getPlayerHand(){
+		return playerHand;
+	}
+	
+	
+}
+
+
+
+
+
+
