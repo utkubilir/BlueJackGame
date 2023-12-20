@@ -1,2 +1,122 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+import java.util.Random;
+
+public class GameDeck {
+    private Cards[] deck;
+	public Cards[] shuffledDeck;
+	private Cards[] first5Cards;
+    private int topOfTheGameDeck;
+    private int firstOfTheGameDeck;
+	private Random r = new Random();
+	
+	
+  
+  public GameDeck() {
+	  
+		deck = new Cards[40];
+		first5Cards = new Cards[5];
+		shuffledDeck = new Cards[40];
+		initializeDeck();
+		}
+
+    public void initializeDeck() {
+       
+        topOfTheGameDeck = 39;
+		firstOfTheGameDeck = 0;
+    }
+	public void setTopOfTheGameDeck(int a){
+		topOfTheGameDeck = topOfTheGameDeck - a;
+	}
+	public int getTopOfTheGameDeck(){
+		return topOfTheGameDeck;
+	}
+	public void setFirstOfTheGameDeck(int a){
+		firstOfTheGameDeck = firstOfTheGameDeck + a;
+	}
+	public int getFirstOfTheGameDeck(){
+		return firstOfTheGameDeck;
+	}
+
+    public void fillAndShuffleDeck() {
+        int j = 1;
+        int x = 1;
+        int y = 1;
+        int z = 1;
+
+        for (int i = 0; i < 40; i++) {
+            if (i < 10) {
+                deck[i] = new Cards("red", "+", j);
+                j++;
+            } else if (i > 9 && i < 20) {
+                deck[i] = new Cards("yellow", "+", x);
+                x++;
+            } else if (i > 19 && i < 30) {
+                deck[i] = new Cards("green", "+", y);
+                y++;
+            } else if (i > 29 && i < 40) {
+                deck[i] = new Cards("blue", "+", z);
+                z++;
+            }
+        }
+	shuffleDeck();
+    }
+
+    public Cards[] shuffleDeck() {
+   Random r = new Random();
+	
+	for(int i = 0 ; i < shuffledDeck.length ; i ++){
+		shuffledDeck[i] = deck[i];
+	}
+
+    for (int i = shuffledDeck.length - 1; i > 0; i--) {
+        int j = r.nextInt(i + 1);
+
+        Cards temp = shuffledDeck[i];
+        shuffledDeck[i] = shuffledDeck[j];
+        shuffledDeck[j] = temp;
+    }
+    return shuffledDeck;
+}
+public Cards[] drawFirst5Cards() {
+	Cards[] shuffledDeck = getShuffledDeck();
+	 
+    
+        for (int i = 0; i < 5; i++) { //0 1 2 3 4 
+            first5Cards[i] = shuffledDeck[i];
+        }
+        setFirstOfTheGameDeck(5);
+        return first5Cards;
+    }
+	 
+	 public Cards[] printShuffledDeck() {
+	    System.out.print("Shuffled Game Deck:");
+		System.out.print("[");
+        for (int i = 0; i < shuffledDeck.length; i++) {
+            System.out.print(shuffledDeck[i]);
+            if (i < shuffledDeck.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+		return shuffledDeck;
+    }
+	public Cards[] getShuffledDeck(){
+		return shuffledDeck;
+	}
+	public Cards[] printDeck() {
+	    System.out.print("Game Deck:");
+		System.out.print("[");
+        for (int i = 0; i < deck.length; i++) {
+            System.out.print(deck[i]);
+            if (i < deck.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+		return deck;
+    }
+	
+	
+	
+}
+
+
