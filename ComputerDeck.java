@@ -5,7 +5,7 @@ import java.util.Random;
 public class ComputerDeck {
     Random r = new Random();
     private Cards[] computerDeck;
-    private Cards[] computerHand;
+    private Cards[] computerHand = new Cards[4];
 	public Cards [] last5cards;
 	private GameDeck gameDeck; 
 	private Cards DOUBLE;
@@ -19,15 +19,15 @@ public class ComputerDeck {
 		randomValue = r.nextInt(100);
         signDeck = new SignDeck();
         computerDeck = new Cards[10];
-        computerHand = new Cards[4];
         last5cards = gameDeck.drawLast5Cards();
-        fillComputerDeck(last5cards);
-		fillComputerHand();
+       
+		
     }
 	public void synchronizeWithGameDeck(GameDeck gameDeck) {
         last5cards = gameDeck.drawLast5Cards();
         fillComputerDeck(last5cards);
-    }
+		fillComputerHand();
+		}
 	public Cards[] fillComputerDeck(Cards[] last5cards) {
 
         for (int i = 0; i < 5; i++) {
@@ -83,6 +83,9 @@ public class ComputerDeck {
         }
 	   return computerHand;
 	}
+	public Cards[] getComputerHand(){
+		return computerHand;
+	}
 	
 	 public Cards[] printComputerHand() {
 		System.out.print("Computer Hand:");
@@ -98,9 +101,7 @@ public class ComputerDeck {
     }
 	
     
-	public Cards[] getComputerHand(){
-		return computerHand;
-	}
+	
 	
 	
 }
