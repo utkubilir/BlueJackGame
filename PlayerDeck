@@ -3,6 +3,7 @@
 import java.util.Random;
 
 public class PlayerDeck {
+	
     Random r = new Random();
     private Cards[] playerDeck;
     private Cards[] playerHand;
@@ -21,12 +22,12 @@ public class PlayerDeck {
         playerDeck = new Cards[10];
         playerHand = new Cards[4];
         first5cards = gameDeck.drawFirst5Cards();
-        fillPlayerDeck(first5cards);
-		fillPlayerHand();
+       
     }
 	public void synchronizeWithGameDeck(GameDeck gameDeck) {
         first5cards = gameDeck.drawFirst5Cards();
         fillPlayerDeck(first5cards);
+		fillPlayerHand();
     }
 	public Cards[] fillPlayerDeck(Cards[] first5cards) {
 
@@ -89,6 +90,21 @@ public class PlayerDeck {
 		System.out.print("[");
         for (int i = 0; i < playerHand.length; i++) {
             System.out.print(playerHand[i].toString());
+            if (i < playerHand.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+		return playerHand;
+    }
+	public void setPlayerHand(){
+		
+	}
+	public Cards[] printPlayerHandWithNumber() {
+		System.out.print("Player Hand:");
+		System.out.print("[");
+        for (int i = 0; i < playerHand.length; i++) {
+            System.out.print(playerHand[i].toString() + " " + "(" + (i + 1) + ")");
             if (i < playerHand.length - 1) {
                 System.out.print(", ");
             }
